@@ -5,7 +5,7 @@ var pixels_x = []
 var active = []
 var rng
 
-func _process(delta: float) -> void:
+func _process(_delta):
 	# step()
 	pass
 

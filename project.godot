@@ -14,6 +14,10 @@ config/name="Untitled Plant Game"
 run/main_scene="res://World/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Music="*res://Music/Music.tscn"
+
 [display]
 
 window/size/width=256
