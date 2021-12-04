@@ -5,6 +5,15 @@ var pixels_x = []
 var active = []
 var rng
 
+func _process(delta: float) -> void:
+	step()
+	step()
+	step()
+	step()
+
+func step():
+	call_deferred("grow")
+
 func _ready():
 	randomize()
 	rng = RandomNumberGenerator.new()
@@ -35,14 +44,18 @@ func plant_seed():
 	active.append(plant_seed)
 	
 func grow():
-	if (randi() % 2) == 1:
+	if (randi() % 4) >= 1:
 		new_pixel(active[active.size() - 1])
 	else:
 		new_pixel(active[randi() % active.size()])
 
 func new_pixel(original_pixel):
 	var var_x = rng.randi_range(-1, 1)
-	var var_y = rng.randi_range(-1, 0)
+	var var_y
+	if (randi() % 3) == 0:
+		var_y = rng.randi_range(-1, 1)
+	# grow regularly
+	else: var_y = rng.randi_range(-1, 0)
 	var new_position = Vector2(original_pixel.position)
 	new_position.x = clamp(new_position.x + var_x, 0, pixels_x.size() - 1)
 	new_position.y = clamp(new_position.y + var_y, 0, pixels_x[new_position.x].size() - 1)
