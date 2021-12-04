@@ -6,10 +6,8 @@ var active = []
 var rng
 
 func _process(delta: float) -> void:
-	step()
-	step()
-	step()
-	step()
+	# step()
+	pass
 
 func step():
 	call_deferred("grow")
@@ -52,7 +50,8 @@ func grow():
 func new_pixel(original_pixel):
 	var var_x = rng.randi_range(-1, 1)
 	var var_y
-	if (randi() % 3) == 0:
+	#grow down
+	if (randi() % 2) == 0:
 		var_y = rng.randi_range(-1, 1)
 	# grow regularly
 	else: var_y = rng.randi_range(-1, 0)
