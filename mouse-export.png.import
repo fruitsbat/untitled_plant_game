@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/flower.png-e929cea0d46f4133150363a964ff9c1b.stex"
+path="res://.import/mouse-export.png-eb9d8f974e073ed3fcac9a6fcb0ed59d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Aseprite/flower.png"
-dest_files=[ "res://.import/flower.png-e929cea0d46f4133150363a964ff9c1b.stex" ]
+source_file="res://mouse-export.png"
+dest_files=[ "res://.import/mouse-export.png-eb9d8f974e073ed3fcac9a6fcb0ed59d.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
