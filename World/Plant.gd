@@ -7,7 +7,7 @@ var rng
 var branches = 4
 
 func _process(_delta):
-	step()
+	#step()
 	pass
 
 func step():
