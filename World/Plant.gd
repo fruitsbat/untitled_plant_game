@@ -37,7 +37,7 @@ func spawn_pixels():
 		pixels_x.append(pixels_y)
 
 func plant_seed():
-	var plant_seed = pixels_x[size.x / 2][size.y - 8]
+	var plant_seed = pixels_x[size.x / 2][size.y - 10]
 	plant_seed.active = true
 	active.append(plant_seed)
 	
