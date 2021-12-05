@@ -6,7 +6,7 @@ var active = []
 var rng
 var branches = 4
 
-var water = 10
+var water = 20
 var health = 100
 var social = 50
 var light = 50
@@ -35,8 +35,7 @@ func step():
 
 func communicate_needs():
 	var needs = [(50 - water) * 2, 100 - health, 100 - social, (50 - light) * 2]
-	var n
-	var most_important = [n, needs[0]]
+	var most_important = [0, needs[0]]
 	var i = 0
 	for need in needs:
 		if most_important[1] <= need:
@@ -45,7 +44,7 @@ func communicate_needs():
 		i += 1
 	var names = ["water", "health", "social", "light"]
 	most_important[0] = names[most_important[0]]
-	if (last_need[0] != most_important[0]) or (abs(last_need[1] - most_important[1]) >= 10):
+	if (last_need[0] != most_important[0]) || (abs(last_need[1] - most_important[1]) >= 10):
 		emit_signal("has_need", most_important)
 		last_need = most_important
 
@@ -119,3 +118,8 @@ func blossom():
 
 func _on_WaterTimer_timeout() -> void:
 	water = clamp(water - 1, 0, 100)
+
+
+func add_water():
+	water = clamp(water + 1, 0, 100)
+	print(water)
