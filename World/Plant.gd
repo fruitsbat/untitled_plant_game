@@ -6,14 +6,49 @@ var active = []
 var rng
 var branches = 4
 
+var water = 10
+var health = 100
+var social = 50
+var light = 50
+var last_need = ["x", -100]
+
+signal has_need(need_and_value)
+
+func get_mood() -> int:
+	return (
+		abs(50 - water) * 2 +
+		abs(50 - light) * 2 +
+		(100 - social) + 
+		(100 - health))
+
 func _process(_delta):
 	#step()
 	pass
 
+
 func step():
+	$Timer.wait_time = float(get_mood()) / 100 + 0.25
 	call_deferred("grow")
-	if randi() % 400 == 0:
+	if (randi() % 200 == 0) && (get_mood() < 50):
 		blossom()
+	communicate_needs()
+
+func communicate_needs():
+	var needs = [(50 - water) * 2, 100 - health, 100 - social, (50 - light) * 2]
+	var n
+	var most_important = [n, needs[0]]
+	var i = 0
+	for need in needs:
+		if most_important[1] <= need:
+			most_important[1] = need
+			most_important[0] = i
+		i += 1
+	var names = ["water", "health", "social", "light"]
+	most_important[0] = names[most_important[0]]
+	if (last_need[0] != most_important[0]) or (abs(last_need[1] - most_important[1]) >= 10):
+		emit_signal("has_need", most_important)
+		last_need = most_important
+
 
 func _ready():
 	randomize()
@@ -25,6 +60,7 @@ func _ready():
 	call_deferred("plant_seed")
 	branches = rng.randi_range(2, 24)
 	print(branches)
+
 
 func spawn_pixels():
 	for n in size.x:
@@ -42,16 +78,19 @@ func spawn_pixels():
 			pixels_y.append(pixel)
 		pixels_x.append(pixels_y)
 
+
 func plant_seed():
 	var plant_seed = pixels_x[size.x / 2][size.y - 10]
 	plant_seed.active = true
 	active.append(plant_seed)
-	
+
+
 func grow():
 	if (randi() % branches) >= 1:
 		new_pixel(active[active.size() - 1])
 	else:
 		new_pixel(active[randi() % active.size()])
+
 
 func new_pixel(original_pixel):
 	var var_x = rng.randi_range(-1, 1)
@@ -68,7 +107,7 @@ func new_pixel(original_pixel):
 	if !new_pixel.active:
 		active.append(new_pixel)
 	new_pixel.age_up()
-	
+
 
 func blossom():
 	var Flower = preload("res://World/Flower.tscn")
@@ -76,3 +115,7 @@ func blossom():
 	var main = get_tree().current_scene
 	flower.global_position = active[randi() % active.size()].position
 	main.add_child(flower)
+
+
+func _on_WaterTimer_timeout() -> void:
+	water = clamp(water - 1, 0, 100)
