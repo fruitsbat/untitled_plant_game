@@ -32,7 +32,7 @@ func _process(_delta):
 func step():
 	$Timer.wait_time = abs(float(get_mood()) / 100) + 0.25
 	call_deferred("grow")
-	if (randi() % 200 == 0) && (get_mood() < 50):
+	if (randi() % 150 == 0) && (get_mood() < 50):
 		blossom()
 	communicate_needs()
 
