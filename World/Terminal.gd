@@ -6,20 +6,24 @@ var last = "sample tess"
 
 var water_msg_low = [
 	"Please water me :o",
-	"I'm THIRSTY i could drink a [shake rate=10 level=2]100!!![/shake] ... somethings"
+	"I'm THIRSTY i could drink a [shake rate=10 level=2]100!!![/shake] ... somethings",
+	"Water me!!!",
+	"I need more water!",
 	]
 var water_msg_high = [
 	"EEE! Too wet!!!",
 	"The pot is like a swamp... :(",
 	"I need to dry!!!",
 	"Wet wet wet!!!! AAAAAA",
-	"Way too wet :( If this was nintendo ds game i would ask you to blow into the microphone, but [shake rate=10 level=2]NO![/shake]"
+	"Way too wet :( If this was nintendo ds game i would ask you to blow into the microphone, but [shake rate=10 level=2]NO![/shake]",
+	"I need a bit to dry.. Please don't water me for a while, okay?",
 	]
 var water_msg_good = [
 	"Comfy wet soil :)",
 	"Thank you!!!",
 	"Thank you for taking such good care of me!",
-	"When i'm happy i grow [shake rate=10 level=2]flowers[/shake]!"
+	"When i'm happy i grow [shake rate=10 level=2]flowers[/shake]!",
+	"I'm [wave amp=24 freq=2]way[/wave] bigger than the flowers outside :)"
 	]
 
 var social = [
@@ -32,6 +36,8 @@ var social = [
 	"Ladybirds play dead to avoid predators. Don't we all sometimes...",
 	"Do you ever forget if you already told someone something and then you just tell them like [shake rate=10 level=2]50 times[/shake]? Yeah.",
 	"If i had to fight someone i would simply look up the weaknesses section on their wikipedia page.",
+	"Do you wanna watch anime together?",
+	"I hope you had a nice day today!",
 ]
 
 func _ready() -> void:

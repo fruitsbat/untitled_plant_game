@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://World/Plant.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/FullscreenButton.gd" type="Script" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://Aseprite/wateringcanactive.png" type="Texture" id=14]
 [ext_resource path="res://World/Pot.gd" type="Script" id=15]
 [ext_resource path="res://Aseprite/Background.png" type="Texture" id=16]
+[ext_resource path="res://Aseprite/Mountains.png" type="Texture" id=17]
+[ext_resource path="res://World/Clouds.gd" type="Script" id=18]
 
 [sub_resource type="Theme" id=7]
 
@@ -55,11 +57,20 @@ color = Color( 0.341176, 0.337255, 0.756863, 1 )
 
 [node name="Plant" parent="." instance=ExtResource( 1 )]
 
+[node name="Blue" type="ColorRect" parent="."]
+margin_left = 128.0
+margin_right = 237.0
+margin_bottom = 144.0
+color = Color( 0.517647, 0.745098, 0.929412, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Options" type="Panel" parent="."]
-margin_left = 236.0
-margin_top = 2.0
-margin_right = 254.0
-margin_bottom = 142.0
+margin_left = 237.0
+margin_top = 1.0
+margin_right = 255.0
+margin_bottom = 143.0
 mouse_filter = 2
 theme = SubResource( 7 )
 custom_styles/panel = SubResource( 1 )
@@ -69,9 +80,9 @@ __meta__ = {
 
 [node name="FullscreenButton" type="TextureButton" parent="Options"]
 margin_left = 1.0
-margin_top = 123.0
+margin_top = 125.0
 margin_right = 17.0
-margin_bottom = 139.0
+margin_bottom = 141.0
 texture_normal = ExtResource( 3 )
 texture_hover = ExtResource( 4 )
 script = ExtResource( 2 )
@@ -81,9 +92,9 @@ __meta__ = {
 
 [node name="MusicVolume" type="VSlider" parent="Options"]
 margin_left = 1.0
-margin_top = 62.0
+margin_top = 63.0
 margin_right = 17.0
-margin_bottom = 122.0
+margin_bottom = 124.0
 custom_icons/tick = ExtResource( 7 )
 custom_icons/grabber_disabled = ExtResource( 7 )
 custom_icons/grabber_highlight = ExtResource( 8 )
@@ -101,7 +112,7 @@ bus_channel = "Music"
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 17.0
-margin_bottom = 61.0
+margin_bottom = 62.0
 rect_scale = Vector2( 1, 0.99844 )
 custom_icons/tick = ExtResource( 7 )
 custom_icons/grabber_disabled = ExtResource( 7 )
@@ -116,11 +127,31 @@ __meta__ = {
 }
 bus_channel = "SFX"
 
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Mountains" type="Sprite" parent="Node2D"]
+position = Vector2( 64, 74 )
+texture = ExtResource( 17 )
+
+[node name="Clouds" type="Node2D" parent="Node2D"]
+script = ExtResource( 18 )
+
+[node name="Timer" type="Timer" parent="Node2D/Clouds"]
+
+[node name="Background" type="Sprite" parent="Node2D"]
+texture = ExtResource( 16 )
+centered = false
+
+[node name="Pot" type="Sprite" parent="Node2D"]
+position = Vector2( 64, 135 )
+texture = ExtResource( 9 )
+script = ExtResource( 15 )
+
 [node name="RightPanel" type="Panel" parent="."]
-margin_left = 128.0
-margin_top = 2.0
-margin_right = 234.0
-margin_bottom = 142.0
+margin_left = 129.0
+margin_top = 1.0
+margin_right = 236.0
+margin_bottom = 143.0
 mouse_filter = 2
 theme = SubResource( 7 )
 custom_styles/panel = SubResource( 1 )
@@ -151,10 +182,10 @@ wait_time = 0.05
 [node name="MessageTimer" type="Timer" parent="RightPanel/Terminal"]
 
 [node name="WateringCan" type="TextureButton" parent="RightPanel"]
-margin_left = 2.0
-margin_top = 122.0
-margin_right = 19.0
-margin_bottom = 139.0
+margin_left = 1.0
+margin_top = 125.0
+margin_right = 18.0
+margin_bottom = 142.0
 texture_normal = ExtResource( 12 )
 texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 14 )
@@ -174,20 +205,12 @@ amount = 15
 lifetime = 0.5
 process_material = SubResource( 13 )
 
-[node name="Background" type="Sprite" parent="."]
-texture = ExtResource( 16 )
-centered = false
-
-[node name="Pot" type="Sprite" parent="."]
-position = Vector2( 64, 135 )
-texture = ExtResource( 9 )
-script = ExtResource( 15 )
-
-[connection signal="good_water" from="Plant" to="Pot" method="_on_Plant_good_water"]
+[connection signal="good_water" from="Plant" to="Node2D/Pot" method="_on_Plant_good_water"]
 [connection signal="has_need" from="Plant" to="RightPanel/Terminal" method="_on_Plant_has_need"]
 [connection signal="pressed" from="Options/FullscreenButton" to="Options/FullscreenButton" method="_on_FullscreenButton_pressed"]
 [connection signal="value_changed" from="Options/MusicVolume" to="Options/MusicVolume" method="_on_MusicVolume_value_changed"]
 [connection signal="value_changed" from="Options/SFXVolume" to="Options/SFXVolume" method="_on_MusicVolume_value_changed"]
+[connection signal="timeout" from="Node2D/Clouds/Timer" to="Node2D/Clouds" method="_on_Timer_timeout"]
 [connection signal="was_social" from="RightPanel/Terminal" to="Plant" method="_on_Terminal_was_social"]
 [connection signal="timeout" from="RightPanel/Terminal/Reveal" to="RightPanel/Terminal" method="_on_Reveal_timeout"]
 [connection signal="timeout" from="RightPanel/Terminal/MessageTimer" to="RightPanel/Terminal" method="_on_MessageTimer_timeout"]
