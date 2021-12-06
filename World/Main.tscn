@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://World/Plant.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/FullscreenButton.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Tools/WateringCan.gd" type="Script" id=13]
 [ext_resource path="res://Aseprite/wateringcanactive.png" type="Texture" id=14]
 [ext_resource path="res://World/Pot.gd" type="Script" id=15]
+[ext_resource path="res://Aseprite/Background.png" type="Texture" id=16]
 
 [sub_resource type="Theme" id=7]
 
@@ -173,8 +174,12 @@ amount = 15
 lifetime = 0.5
 process_material = SubResource( 13 )
 
+[node name="Background" type="Sprite" parent="."]
+texture = ExtResource( 16 )
+centered = false
+
 [node name="Pot" type="Sprite" parent="."]
-position = Vector2( 64, 136 )
+position = Vector2( 64, 135 )
 texture = ExtResource( 9 )
 script = ExtResource( 15 )
 
