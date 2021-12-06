@@ -10,8 +10,11 @@ var water = 20
 var health = 100
 var social = 50
 var light = 50
-var last_need = ["x", -100]
+var last_need = ["x", -100, -100]
 
+var was_silent = false
+
+signal good_water()
 signal has_need(need_and_value)
 
 func get_mood() -> int:
@@ -27,26 +30,30 @@ func _process(_delta):
 
 
 func step():
-	$Timer.wait_time = float(get_mood()) / 100 + 0.25
+	$Timer.wait_time = abs(float(get_mood()) / 100) + 0.25
 	call_deferred("grow")
 	if (randi() % 200 == 0) && (get_mood() < 50):
 		blossom()
 	communicate_needs()
 
 func communicate_needs():
-	var needs = [(50 - water) * 2, 100 - health, 100 - social, (50 - light) * 2]
-	var most_important = [0, needs[0]]
+	var needs = [abs((50 - water) * 2), 100 - health, 100 - social, abs((50 - light) * 2)]
+	var needs_for_real = [water, health, social, light]
+	var most_important = ["cool name sample text", needs[0], needs_for_real[0]]
 	var i = 0
 	for need in needs:
 		if most_important[1] <= need:
 			most_important[1] = need
+			most_important[2] = needs_for_real[i]
 			most_important[0] = i
 		i += 1
 	var names = ["water", "health", "social", "light"]
 	most_important[0] = names[most_important[0]]
-	if (last_need[0] != most_important[0]) || (abs(last_need[1] - most_important[1]) >= 10):
+	if (last_need[0] != most_important[0]) || (abs(last_need[1] - most_important[1]) >= 10) || was_silent:
 		emit_signal("has_need", most_important)
 		last_need = most_important
+		was_silent = false
+		$TalkTimer.start(15)
 
 
 func _ready():
@@ -118,8 +125,19 @@ func blossom():
 
 func _on_WaterTimer_timeout() -> void:
 	water = clamp(water - 1, 0, 100)
+	social = clamp(social - 2, 0, 100)
 
 
 func add_water():
 	water = clamp(water + 1, 0, 100)
-	print(water)
+	if water == 55:
+		$WaterSFX.play(0)
+		emit_signal("good_water")
+
+
+func _on_TalkTimer_timeout() -> void:
+	was_silent = true
+
+
+func _on_Terminal_was_social() -> void:
+	social += clamp(social + randi() % 11, 0, 10)
