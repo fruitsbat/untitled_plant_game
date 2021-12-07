@@ -38,6 +38,7 @@ var social = [
 	"If i had to fight someone i would simply look up the weaknesses section on their wikipedia page.",
 	"Do you wanna watch anime together?",
 	"I hope you had a nice day today!",
+	"Do you have games on your phone",
 ]
 
 func _ready() -> void:
