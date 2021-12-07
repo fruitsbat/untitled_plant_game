@@ -2,6 +2,9 @@ extends Sprite
 
 var direction = 0
 
+func _ready():
+	frame = randi() % hframes
+
 func _physics_process(delta):
 	global_position += Vector2(direction, 0)
 
