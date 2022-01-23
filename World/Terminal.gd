@@ -25,7 +25,6 @@ var water_msg_good = [
 	"When i'm happy i grow [shake rate=10 level=2]flowers[/shake]!",
 	"I'm [wave amp=24 freq=2]way[/wave] bigger than the flowers outside :)"
 	]
-
 var social = [
 	"You ever think about bees?",
 	"You like [wave amp=24 freq=2]Jazz[/wave]?",
@@ -79,6 +78,8 @@ func print_message(mesage):
 func _on_Reveal_timeout() -> void:
 	if visible_characters <= text.length():
 		visible_characters += 1
+		$Talk.play(0)
+		$Talk.pitch_scale = rand_range(0.7, 1.3)
 	else: $Reveal.stop()
 
 

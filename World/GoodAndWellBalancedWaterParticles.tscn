@@ -17,7 +17,6 @@ color = Color( 0.341176, 0.337255, 0.756863, 1 )
 [node name="GoodAndWellBalancedWaterParticles" type="Particles2D"]
 position = Vector2( 0, -3 )
 z_index = 2
-emitting = false
 amount = 32
 lifetime = 2.0
 explosiveness = 1.0

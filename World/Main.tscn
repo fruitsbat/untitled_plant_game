@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://World/Plant.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/FullscreenButton.gd" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://World/Clouds.gd" type="Script" id=18]
 [ext_resource path="res://Aseprite/sfx.png" type="Texture" id=19]
 [ext_resource path="res://Aseprite/sfx-hover.png" type="Texture" id=20]
+[ext_resource path="res://Music/Talk.wav" type="AudioStream" id=21]
 
 [sub_resource type="Theme" id=7]
 
@@ -54,6 +55,14 @@ initial_velocity = 15.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 color = Color( 0.341176, 0.337255, 0.756863, 1 )
+
+[sub_resource type="Environment" id=14]
+background_mode = 4
+glow_enabled = true
+glow_levels/4 = true
+glow_levels/5 = false
+glow_levels/7 = true
+glow_bloom = 0.34
 
 [node name="Main" type="Node2D"]
 
@@ -165,7 +174,7 @@ __meta__ = {
 material = SubResource( 3 )
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 105.0
+margin_right = 106.0
 margin_bottom = 124.0
 theme = ExtResource( 5 )
 custom_colors/default_color = Color( 0.94902, 0.988235, 0.878431, 1 )
@@ -182,6 +191,10 @@ __meta__ = {
 wait_time = 0.05
 
 [node name="MessageTimer" type="Timer" parent="RightPanel/Terminal"]
+
+[node name="Talk" type="AudioStreamPlayer" parent="RightPanel/Terminal"]
+stream = ExtResource( 21 )
+bus = "SFX"
 
 [node name="WateringCan" type="TextureButton" parent="RightPanel"]
 margin_left = 1.0
@@ -209,7 +222,11 @@ amount = 15
 lifetime = 0.5
 process_material = SubResource( 13 )
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 14 )
+
 [connection signal="good_water" from="Plant" to="PlantBackground/Pot" method="_on_Plant_good_water"]
+[connection signal="good_water" from="Plant" to="RightPanel/WateringCan" method="on_enough_water"]
 [connection signal="has_need" from="Plant" to="RightPanel/Terminal" method="_on_Plant_has_need"]
 [connection signal="timeout" from="PlantBackground/Clouds/Timer" to="PlantBackground/Clouds" method="_on_Timer_timeout"]
 [connection signal="pressed" from="Options/FullscreenButton" to="Options/FullscreenButton" method="_on_FullscreenButton_pressed"]
